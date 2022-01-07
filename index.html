@@ -10,6 +10,13 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+    <meta name="msapplication-TileColor" content="#2d89ef" />
+    <meta name="theme-color" content="#ffffff" />
     <style>
       body {
         font-family: Helvetica, Arial, sans-serif;
@@ -93,6 +100,28 @@
         />
       </div>
     </div>
+    <div class="position-absolute bottom-0 left-0 w-100">
+      <div class="text-center w-100">
+        <small>
+          <small>
+            Made by
+            <a
+              href="https://satshree.com.np/"
+              style="text-decoration: none"
+              target="_blank"
+              >Satshree Shrestha</a
+            >
+            |
+            <a
+              href="https://github.com/satshree/websocket-tester"
+              style="text-decoration: none"
+              target="_blank"
+              >GitHub</a
+            >
+          </small>
+        </small>
+      </div>
+    </div>
     <script>
       let key;
 
@@ -121,6 +150,7 @@
           document.cookie = "auth=" + key + "; max-age=30";
         } else {
           alert("Enter proper room and key.");
+          loadingDone();
         }
       }
 

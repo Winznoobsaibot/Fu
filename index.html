@@ -25,105 +25,195 @@
   </head>
   <body>
     <div
-      class="d-flex align-items-center justify-content-center"
-      style="padding: 5% 25%; flex-direction: column"
+      class="position-fixed p-2 top-0 left-0 w-100"
+      style="background-color: rgba(209, 209, 209, 0.5)"
     >
-      <h4>WebSocket Tester</h4>
-      <br />
-      <div
-        id="join"
-        class="d-flex align-items-center justify-content-center w-100"
-        style="flex-direction: column"
-      >
-        <div style="width: 100%">
-          <label for="room">Room</label>
-          <input
-            type="text"
-            class="form-control"
-            id="room"
-            style="width: 100%"
-            required
-          />
+      <div>
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <span>WebSocket Tester</span>
+          <small>
+            <small>
+              Made by
+              <a
+                href="https://satshree.com.np/"
+                style="text-decoration: none"
+                target="_blank"
+                >Satshree Shrestha</a
+              >
+              |
+              <a
+                href="https://github.com/satshree/websocket-tester"
+                style="text-decoration: none"
+                target="_blank"
+                >GitHub</a
+              >
+            </small>
+          </small>
         </div>
-        <br />
-        <div style="width: 100%">
-          <label for="key">Key</label>
-          <input
-            type="text"
-            class="form-control"
-            id="key"
-            style="width: 100%"
-            required
-          />
-        </div>
-        <br />
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="joinBtn"
-          onclick="joinRoom()"
-        >
-          Join
-        </button>
-      </div>
-      <div id="info" style="display: none; width: 70%; align-items: center">
-        <h5>Room: <span id="roomName"></span></h5>
-        <h5>Key: <span id="keyName"></span></h5>
-        <br />
-        <button type="button" class="btn btn-primary" onclick="refresh()">
-          Refresh
-        </button>
-      </div>
-      <div id="chat" style="display: none; width: 70%; text-align: center">
-        <br />
-        <textarea
-          id="chat-log"
-          class="form-control"
-          style="resize: none; overflow-y: scroll; height: 250px; width: 100%"
-          readonly
-        ></textarea>
-        <br />
-        <input
-          id="chat-message-input"
-          style="width: 100%"
-          class="form-control"
-          type="text"
-          placeholder="Message"
-        />
-        <br />
-        <br />
-        <input
-          id="chat-message-submit"
-          type="button"
-          class="btn btn-primary"
-          value="Send"
-        />
       </div>
     </div>
-    <div class="position-absolute bottom-0 left-0 w-100">
-      <div class="text-center w-100">
-        <small>
-          <small>
-            Made by
-            <a
-              href="https://satshree.com.np/"
-              style="text-decoration: none"
-              target="_blank"
-              >Satshree Shrestha</a
+    <div style="height: 100vh">
+      <div class="d-flex align-items-center justify-content-center h-100">
+        <div id="join" style="display: block; width: 50%">
+          <div style="width: 100%">
+            <label for="scheme">Websocket Scheme</label>
+            <select
+              class="form-select"
+              id="scheme"
+              style="width: 100%"
+              required
             >
-            |
-            <a
-              href="https://github.com/satshree/websocket-tester"
-              style="text-decoration: none"
-              target="_blank"
-              >GitHub</a
+              <option value="wss://" selected>wss://</option>
+              <option value="ws://" selected>ws://</option>
+            </select>
+          </div>
+          <br />
+          <div style="width: 100%">
+            <label for="room"
+              >Room <small>(Do not include http scheme!)</small></label
             >
-          </small>
-        </small>
+            <input
+              type="text"
+              class="form-control"
+              id="room"
+              placeholder="awesomehost.com/ws/room/123/"
+              style="width: 100%"
+              required
+            />
+          </div>
+          <br />
+          <div style="width: 100%">
+            <div class="text-center">
+              <small
+                >This key value pair will be set to cookies. Leave empty if not
+                required.</small
+              >
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-sm-3">
+                <label for="auth">Key</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="auth"
+                  style="width: 100%"
+                  placeholder="Key name"
+                  required
+                />
+              </div>
+              <div class="col-sm">
+                <label for="key">Value</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="key"
+                  style="width: 100%"
+                  placeholder="Authorization key value"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="text-center">
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="joinBtn"
+              onclick="joinRoom()"
+            >
+              Join
+            </button>
+          </div>
+        </div>
+        <div id="info" style="display: none; padding: 5rem">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="text-center">
+                <strong>Parameters</strong>
+              </div>
+              <hr />
+              <strong>WebSocket Scheme,</strong>
+              <br />
+              <small id="schemeType"></small>
+              <br />
+              <br />
+              <strong>Room,</strong>
+              <br />
+              <small id="roomName"></small>
+              <br />
+              <br />
+              <strong>Authorization,</strong>
+              <br />
+              <small id="keyName" style="overflow-wrap: break-word"></small>
+            </div>
+            <div class="col-sm">
+              <div
+                id="chat"
+                style="display: none; width: 100%; text-align: center"
+              >
+                <textarea
+                  id="chat-log"
+                  class="form-control"
+                  style="
+                    overflow-y: scroll;
+                    height: 350px;
+                    width: 100%;
+                    font-size: 12px;
+                  "
+                  readonly
+                ></textarea>
+                <br />
+                <div class="input-group">
+                  <input
+                    id="chat-message-input"
+                    class="form-control"
+                    type="text"
+                    placeholder="Message"
+                  />
+                  <input
+                    id="chat-message-submit"
+                    type="button"
+                    class="btn btn-primary"
+                    value="Send"
+                  />
+                </div>
+                <br />
+                <button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  onclick="clearOutput()"
+                >
+                  Clear Output
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  onclick="refresh()"
+                >
+                  Refresh
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
       </div>
     </div>
     <script>
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      const params = Object.fromEntries(urlSearchParams.entries());
+
+      document.querySelector("#scheme").value = params.scheme || "ws://";
+      document.querySelector("#room").value = params.room || null;
+      document.querySelector("#auth").value = params.auth || null;
+      document.querySelector("#key").value = params.key || null;
+
       let key;
+      let auth;
+
+      params.join === "1" ? document.querySelector("#joinBtn").click() : null;
 
       function loading() {
         document.querySelector("#joinBtn").innerText = "Joining...";
@@ -136,7 +226,16 @@
       }
 
       function refresh() {
-        window.location.href = "";
+        // window.location.href = "";
+        window.location.reload(true);
+      }
+
+      function hideJoin() {
+        document.querySelector("#join").style.display = "none";
+      }
+
+      function showJoin() {
+        document.querySelector("#join").style.display = "block";
       }
 
       function joinRoom() {
@@ -144,29 +243,46 @@
 
         let room = document.querySelector("#room").value.trim();
         key = document.querySelector("#key").value.trim();
+        auth = document.querySelector("#auth").value.trim();
 
-        if (room && key) {
+        if (room) {
+          if (key && auth) {
+            document.cookie = `${auth}=${key}; max-age=30`;
+          } else {
+            alert("Info: No key will be set on cookie.");
+          }
+
           startWebsocket(room);
-          document.cookie = "auth=" + key + "; max-age=30";
         } else {
-          alert("Enter proper room and key.");
+          alert("Enter room.");
           loadingDone();
         }
       }
 
+      function clearOutput() {
+        document.querySelector("#chat-log").value = "";
+      }
+
       function startWebsocket(room) {
-        let wsStart = "ws://";
-        if (window.location.protocol == "https:") {
-          wsStart = "wss://";
-        }
+        let wsStart = document.querySelector("#scheme").value;
 
         const chatSocket = new WebSocket(wsStart + room);
 
         chatSocket.onopen = function (e) {
+          hideJoin();
           loadingDone();
+          document.querySelector("#schemeType").innerText = wsStart;
           document.querySelector("#roomName").innerText = room;
-          document.querySelector("#keyName").innerText = key;
-          document.querySelector("#join").style.display = "none";
+
+          if (key && auth) {
+            document.querySelector(
+              "#keyName"
+            ).innerText = `${auth}=${key}; max-age=30`;
+          } else {
+            document.querySelector("#keyName").innerText =
+              "No authorization set.";
+          }
+          // document.querySelector("#join").style.display = "none";
           document.querySelector("#info").style.display = "block";
           document.querySelector("#chat").style.display = "block";
         };
@@ -175,19 +291,23 @@
           let data = JSON.parse(e.data);
           console.log("SOCKET MESSAGE", data);
           document.querySelector("#chat-log").value +=
-            `${JSON.stringify(data.message)}` + "\n";
+            `${JSON.stringify(data.message, null, 2)}` +
+            "\n" +
+            "-----------------------------------------\n";
         };
 
         chatSocket.onclose = function (e) {
+          showJoin();
           loadingDone();
           console.log("SOCKET CLOSED.", e);
           alert("Socket closed. (Check console.)");
           document.querySelector("#info").style.display = "none";
           document.querySelector("#chat").style.display = "none";
-          document.querySelector("#join").style.display = "flex";
+          // document.querySelector("#join").style.display = "flex";
         };
 
         chatSocket.onerror = function (e) {
+          showJoin();
           loadingDone();
           console.log("ERROR", e);
           alert("Socket error. (Check console.)");
@@ -205,12 +325,16 @@
           const messageInputDom = document.querySelector("#chat-message-input");
           let message = messageInputDom.value;
 
-          chatSocket.send(
-            JSON.stringify({
-              sender: "WEB_CLIENT",
-              message: message,
-            })
-          );
+          if (message) {
+            chatSocket.send(
+              JSON.stringify({
+                sender: "WEB_CLIENT_websockettester_madebysatshree",
+                message: message,
+              })
+            );
+          } else {
+            alert("Empty message.");
+          }
           messageInputDom.value = "";
         };
       }

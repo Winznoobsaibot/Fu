@@ -205,7 +205,10 @@
       const urlSearchParams = new URLSearchParams(window.location.search);
       const params = Object.fromEntries(urlSearchParams.entries());
 
-      document.querySelector("#scheme").value = params.scheme || "ws://";
+      params.scheme === "wss"
+        ? (document.querySelector("#scheme").value = "wss://")
+        : (document.querySelector("#scheme").value = "ws://");
+
       document.querySelector("#room").value = params.room || null;
       document.querySelector("#auth").value = params.auth || null;
       document.querySelector("#key").value = params.key || null;

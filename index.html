@@ -269,7 +269,12 @@
       function startWebsocket(room) {
         let wsStart = document.querySelector("#scheme").value;
 
-        const chatSocket = new WebSocket(wsStart + room);
+        try {
+          const chatSocket = new WebSocket(wsStart + room);
+        } catch (e) {
+          console.log(e);
+          alert("Unable to join websocket room. Check console for errors.");
+        }
 
         chatSocket.onopen = function (e) {
           hideJoin();
